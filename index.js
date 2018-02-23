@@ -128,9 +128,9 @@ Choo.prototype.start = async function () {
   this._tree = await this._prerender(this.state)
   assert.ok(this._tree, 'choo.start: no valid DOM node returned for location ' + this.state.href)
 
-  this.emitter.prependListener(self._events.RENDER, nanoraf(function () {
+  this.emitter.prependListener(self._events.RENDER, nanoraf(async function () {
     var renderTiming = nanotiming('choo.render')
-    var newTree = self._prerender(self.state)
+    var newTree = await self._prerender(self.state)
     assert.ok(newTree, 'choo.render: no valid DOM node returned for location ' + self.state.href)
 
     assert.equal(self._tree.nodeName, newTree.nodeName, 'choo.render: The target node <' +
